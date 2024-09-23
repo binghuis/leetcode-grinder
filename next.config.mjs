@@ -9,14 +9,17 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
 
+const isDev = process.env.NODE_ENV === 'development';
+const isProd = process.env.NODE_ENV === 'production';
+
 const nextConfig = {
-  reactStrictMode: false,
-  swcMinify: true,
+  reactStrictMode: true,
+  swcMinify: isProd,
   sassOptions: {
     includePaths: [path.join(__dirname, 'src/styles')],
   },
   compiler: {
-    removeConsole: true,
+    removeConsole: isProd,
   },
   experimental: {
     typedRoutes: true,

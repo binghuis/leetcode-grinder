@@ -1,16 +1,12 @@
 'use client';
-import axios from 'axios';
+import { LeetCard } from '@/components/leetcard';
 import { useEffect } from 'react';
 
 export default function App() {
-  useEffect(() => {
-    axios.get('/api/dog?a=2');
-  }, []);
+  useEffect(() => {}, []);
   return (
-    <main className="">
-      {/* <ThemeSwitcher />
-      <ChatBox /> */}
-      @children
-    </main>
+    <div className="">
+      <LeetCard />
+    </div>
   );
 }

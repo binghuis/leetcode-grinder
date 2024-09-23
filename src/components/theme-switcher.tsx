@@ -1,27 +1,26 @@
 'use client';
 
-import { MoonIcon } from '@/icons/moon';
-import { SunIcon } from '@/icons/sun';
-import { Switch } from '@nextui-org/react';
+import { MoonIcon, SunIcon } from '@radix-ui/react-icons';
 import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
 
-export function ThemeSwitcher() {
-  const [isSelected, setIsSelected] = useState(false);
-  const { theme, setTheme } = useTheme();
+import { Button } from '@/components/ui/button';
 
-  useEffect(() => {
-    setTheme(isSelected ? 'dark' : 'light');
-  }, [isSelected, setTheme]);
+export function ModeToggle() {
+  const { setTheme, theme } = useTheme();
 
   return (
-    <Switch
-      isSelected={isSelected}
-      onValueChange={setIsSelected}
-      color="secondary"
-      thumbIcon={({ isSelected, className }) =>
-        isSelected ? <MoonIcon className={className} /> : <SunIcon className={className} />
-      }
-    />
+    <div>
+      <Button
+        size="icon"
+        variant={'outline'}
+        onClick={() => {
+          setTheme(theme === 'dark' ? 'light' : 'dark');
+        }}
+      >
+        <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+        <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+        <span className="sr-only">Toggle theme</span>
+      </Button>
+    </div>
   );
 }

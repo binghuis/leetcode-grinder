@@ -1,9 +1,9 @@
-import photos from '@/constant/photos';
+import { ModeToggle } from '@/components/theme-switcher';
 import '@/styles/globals.css';
 import { Metadata } from 'next';
-import Link from 'next/link';
-import { Providers } from './providers';
+import { ThemeProvider } from './providers';
 import StyledJsxRegistry from './registry';
+
 // import type { Route } from 'next';
 
 export const metadata: Metadata = {
@@ -12,39 +12,24 @@ export const metadata: Metadata = {
   keywords: ['nextjs'],
 };
 
-export default function RootLayout(props: {
-  children: React.ReactNode;
-  auth: React.ReactNode;
-  modal: React.ReactNode;
-}) {
-  const { children, auth, modal } = props;
+export default function RootLayout(props: { children: React.ReactNode }) {
+  const { children } = props;
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <Providers>
-          <StyledJsxRegistry>
-            <div>
-              <Link href="/login">To @Auth/Login</Link>
+        <StyledJsxRegistry>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="p-2">
+              <ModeToggle />
+              <div className="py-2">{children}</div>
             </div>
-            <div>
-              <Link href="/settings">To @Children/Settings</Link>
-            </div>
-
-            <div>
-              <Link href="/">Back To Home</Link>
-            </div>
-            <div className="text-green-600">
-              {auth}
-              {children}
-              {modal}
-            </div>
-            {photos.map(({ id, imageSrc }) => (
-              <Link className="block" key={id} href={`/photos/${id}`}>
-                {imageSrc}
-              </Link>
-            ))}
-          </StyledJsxRegistry>
-        </Providers>
+          </ThemeProvider>
+        </StyledJsxRegistry>
       </body>
     </html>
   );
